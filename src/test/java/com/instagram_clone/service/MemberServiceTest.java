@@ -4,6 +4,7 @@ import com.instagram_clone.VariableCommon;
 import com.instagram_clone.domain.Member;
 import com.instagram_clone.repository.MemberRepository;
 import com.instagram_clone.request.member.LoginForm;
+import com.instagram_clone.request.member.SignInForm;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,8 +34,8 @@ class MemberServiceTest {
         //given 준비 과정
         given(memberRepository.findByEmail(anyString()))
                 .willReturn(Optional.ofNullable(Member.builder()
-                        .email("admin@instagram.com")
-                        .password("admin").build()));
+                        .email(VariableCommon.EMAIL)
+                        .password(VariableCommon.PASSWORD).build()));
         //when 실행
         LoginForm loginForm = LoginForm.builder()
                 .email(VariableCommon.EMAIL)
@@ -64,17 +65,24 @@ class MemberServiceTest {
 
     @DisplayName("회원가입이 되어야한다.")
     @Test
-    void signin_O() throws Exception {
+    void signIn_O() throws Exception {
         //given 준비 과정
-        LoginForm loginForm = LoginForm.builder()
-                .email("admin@naver.com")
-                .password("1234")
-                .build();
+        Member saveMember = Member.builder()
+                .email(VariableCommon.EMAIL)
+                .password(VariableCommon.PASSWORD).build();
+        given(memberRepository.save(any(Member.class)))
+                .willReturn(saveMember);
 
         //when 실행
+        SignInForm signInForm = SignInForm.builder()
+                .email(VariableCommon.EMAIL)
+                .password(VariableCommon.PASSWORD)
+                .build();
+
+        memberService.addMember(signInForm);
 
         //then 검증
+        assertEquals(saveMember.getEmail(), signInForm.email());
 
     }
-
 }
