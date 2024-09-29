@@ -4,7 +4,7 @@ import com.instagram_clone.VariableCommon;
 import com.instagram_clone.domain.Member;
 import com.instagram_clone.repository.MemberRepository;
 import com.instagram_clone.request.member.LoginForm;
-import com.instagram_clone.request.member.SignInForm;
+import com.instagram_clone.request.member.SignUpForm;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
 class MemberServiceTest {
@@ -41,7 +43,7 @@ class MemberServiceTest {
                 .email(VariableCommon.EMAIL)
                 .password(VariableCommon.PASSWORD)
                 .build();
-        Member member = memberService.getMemberByEmail(loginForm);
+        Member member = memberService.login(loginForm);
 
         //then 검증
         assertEquals(member.getEmail(), loginForm.email());
@@ -60,29 +62,34 @@ class MemberServiceTest {
                 .build();
 
         //then 검증
-        assertThrows(EntityNotFoundException.class, () -> memberService.getMemberByEmail(loginForm));
+        assertThrows(EntityNotFoundException.class, () -> memberService.login(loginForm));
     }
 
     @DisplayName("회원가입이 되어야한다.")
     @Test
-    void signIn_O() throws Exception {
-        //given 준비 과정
-        Member saveMember = Member.builder()
-                .email(VariableCommon.EMAIL)
-                .password(VariableCommon.PASSWORD).build();
-        given(memberRepository.save(any(Member.class)))
-                .willReturn(saveMember);
-
+    void signUp_O() throws Exception {
         //when 실행
-        SignInForm signInForm = SignInForm.builder()
+        when(memberRepository.save(any()))
+                .thenReturn(Member.builder()
+                        .email(VariableCommon.EMAIL)
+                        .password(VariableCommon.PASSWORD)
+                        .firstName(VariableCommon.FIRST_NAME)
+                        .lastName(VariableCommon.LAST_NAME)
+                        .username(VariableCommon.USERNAME)
+                        .build());
+
+        SignUpForm signUpForm = SignUpForm.builder()
                 .email(VariableCommon.EMAIL)
                 .password(VariableCommon.PASSWORD)
+                .firstName(VariableCommon.FIRST_NAME)
+                .lastName(VariableCommon.LAST_NAME)
+                .username(VariableCommon.USERNAME)
                 .build();
 
-        memberService.addMember(signInForm);
+        Member signup = memberService.signUp(signUpForm);
 
         //then 검증
-        assertEquals(saveMember.getEmail(), signInForm.email());
-
+        assertEquals(signup.getEmail(), VariableCommon.EMAIL);
+        assertEquals(signup.getPassword(), VariableCommon.PASSWORD);
     }
 }

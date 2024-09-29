@@ -3,11 +3,13 @@ package com.instagram_clone.service;
 import com.instagram_clone.domain.Member;
 import com.instagram_clone.repository.MemberRepository;
 import com.instagram_clone.request.member.LoginForm;
-import com.instagram_clone.request.member.SignInForm;
+import com.instagram_clone.request.member.SignUpForm;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.instagram_clone.message.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
@@ -21,24 +23,28 @@ public class MemberService {
      * @return 회원
      * @throws RuntimeException
      */
-    public Member getMemberByEmail(LoginForm loginForm) throws RuntimeException {
-        return memberRepository
+    public Member login(LoginForm loginForm) throws RuntimeException {
+        Member findMember = memberRepository
                 .findByEmail(loginForm.email())
-                .orElseThrow(() -> new EntityNotFoundException("회원이 존재하지 않습니다."));
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+        if (!findMember.getPassword().equals(loginForm.password())) {
+            throw new IllegalArgumentException(PASSWORD_NOT_MATCH);
+        }
+        return findMember;
     }
 
     /**
      * 회원가입
-     * @param signInForm 회원가입 폼
+     * @param signUpForm 회원가입 폼
      */
     @Transactional
-    public void addMember(SignInForm signInForm) {
-        memberRepository.save(Member.builder()
-                .email(signInForm.email())
-                .password(signInForm.password())
-                        .firstName(signInForm.firstName())
-                        .lastName(signInForm.lastName())
-                        .username(signInForm.username())
+    public Member signUp(SignUpForm signUpForm) {
+        return memberRepository.save(Member.builder()
+                .email(signUpForm.email())
+                .password(signUpForm.password())
+                        .firstName(signUpForm.firstName())
+                        .lastName(signUpForm.lastName())
+                        .username(signUpForm.username())
                 .build());
     }
 
