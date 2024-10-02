@@ -1,16 +1,20 @@
 package com.instagram_clone.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import static jakarta.persistence.GenerationType.*;
 
 @Builder
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @Entity
 public class Member {
+    @GeneratedValue(strategy = IDENTITY)
     @Id
     private Long id;
 
