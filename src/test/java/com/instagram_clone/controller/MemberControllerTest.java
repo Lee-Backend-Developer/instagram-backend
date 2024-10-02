@@ -45,7 +45,7 @@ class MemberControllerTest {
                 .willReturn(saveMember);
 
         //then
-        mockMvc.perform(post("/member/login")
+        mockMvc.perform(post("/api/member/login")
                         .formField("email", VariableCommon.EMAIL)
                         .formField("password", VariableCommon.PASSWORD))
                 .andDo(print())
@@ -67,7 +67,7 @@ class MemberControllerTest {
 
 
         //then 검증
-        mockMvc.perform(post("/member/signUp")
+        mockMvc.perform(post("/api/member/signUp")
                         .formField("email", VariableCommon.EMAIL)
                         .formField("password", VariableCommon.PASSWORD)
                         .formField("firstName", VariableCommon.FIRST_NAME)
