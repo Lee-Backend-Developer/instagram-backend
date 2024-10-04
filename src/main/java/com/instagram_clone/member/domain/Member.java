@@ -1,15 +1,15 @@
 package com.instagram_clone.member.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.instagram_clone.post.domain.Post;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.*;
 
-@Builder
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @Entity
@@ -24,6 +24,10 @@ public class Member {
     private String username;
     private String password;
 
+    @OneToMany(mappedBy = "member")
+    private List<Post> posts;
+
+    @Builder
     public Member(Long id, String email, String firstName, String lastName, String username, String password) {
         this.id = id;
         this.email = email;
