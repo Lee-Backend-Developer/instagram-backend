@@ -1,4 +1,4 @@
-package com.instagram_clone.message;
+package com.instagram_clone.member.message;
 
 public interface ErrorMessage {
 

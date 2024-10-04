@@ -1,6 +1,6 @@
-package com.instagram_clone.repository;
+package com.instagram_clone.member.repository;
 
-import com.instagram_clone.domain.Member;
+import com.instagram_clone.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

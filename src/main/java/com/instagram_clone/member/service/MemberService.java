@@ -1,15 +1,15 @@
-package com.instagram_clone.service;
+package com.instagram_clone.member.service;
 
-import com.instagram_clone.domain.Member;
-import com.instagram_clone.repository.MemberRepository;
-import com.instagram_clone.request.member.LoginForm;
-import com.instagram_clone.request.member.SignUpForm;
+import com.instagram_clone.member.domain.Member;
+import com.instagram_clone.member.repository.MemberRepository;
+import com.instagram_clone.member.request.LoginForm;
+import com.instagram_clone.member.request.SignUpForm;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.instagram_clone.message.ErrorMessage.*;
+import static com.instagram_clone.member.message.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,4 +48,16 @@ public class MemberService {
                 .build());
     }
 
+    /**
+     * < 내 정보 조회 >
+     *     - 게시물 Count
+     *     - 팔로워 Count
+     *     - 팔로우 Count
+     *     - 게시물 List
+     * @param username
+     * @return
+     */
+    public Member getMyInfo(String username) {
+        return null;
+    }
 }

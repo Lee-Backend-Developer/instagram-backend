@@ -1,7 +1,6 @@
-package com.instagram_clone.request.member;
+package com.instagram_clone.member.request;
 
 import lombok.Builder;
-import org.springframework.lang.NonNull;
 
 @Builder
 public record LoginForm(
