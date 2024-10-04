@@ -24,9 +24,6 @@ public class Member {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "member")
-    private List<Post> posts;
-
     @Builder
     public Member(Long id, String email, String firstName, String lastName, String username, String password) {
         this.id = id;
