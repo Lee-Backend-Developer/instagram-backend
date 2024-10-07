@@ -38,5 +38,11 @@ public class PostService {
         return postRepository.findByMemberId(memberId);
     }
 
+    // 게시글 삭제
+    @Transactional
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
+
 
 }
