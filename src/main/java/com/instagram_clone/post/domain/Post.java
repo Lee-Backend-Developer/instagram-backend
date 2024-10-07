@@ -2,6 +2,7 @@ package com.instagram_clone.post.domain;
 
 import com.instagram_clone.member.domain.Member;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +27,13 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Post(Long id, String caption, String location, List<String> images, Member member) {
+        this.id = id;
+        this.caption = caption;
+        this.location = location;
+        this.images = images;
+        this.member = member;
+    }
 }

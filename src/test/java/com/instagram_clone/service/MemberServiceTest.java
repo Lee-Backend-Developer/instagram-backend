@@ -1,10 +1,11 @@
 package com.instagram_clone.service;
 
 import com.instagram_clone.VariableCommon;
-import com.instagram_clone.domain.Member;
-import com.instagram_clone.repository.MemberRepository;
-import com.instagram_clone.request.member.LoginForm;
-import com.instagram_clone.request.member.SignUpForm;
+import com.instagram_clone.member.domain.Member;
+import com.instagram_clone.member.repository.MemberRepository;
+import com.instagram_clone.member.request.LoginForm;
+import com.instagram_clone.member.request.SignUpForm;
+import com.instagram_clone.member.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
