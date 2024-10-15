@@ -19,6 +19,7 @@ public class PostApiController {
 
     /**
      * todo 게시글 생성
+     *
      * @return 응답메시지, 상태코드, 요청 데이터
      */
     @PostMapping
@@ -37,6 +38,7 @@ public class PostApiController {
 
     /**
      * todo 게시글 조회
+     *
      * @return 게시글 번호, 내용, 지도, 이미지, 회원
      */
     @GetMapping
@@ -51,4 +53,13 @@ public class PostApiController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * todo 게시글 삭제
+     */
+    @DeleteMapping("{postId}")
+    public ResponseEntity<Response> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        Response response = Response.builder().message("success").state(HttpStatus.OK.getReasonPhrase()).build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
