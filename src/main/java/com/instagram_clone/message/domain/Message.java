@@ -1,27 +1,20 @@
-package com.instagram_clone.post.domain;
+package com.instagram_clone.message.domain;
 
+import com.instagram_clone.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @Entity
-public class Comment {
+public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-    @ManyToOne
-    private Post post;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     private String content;
-
-    private boolean like = false;
-
-    @CreationTimestamp
-    private LocalDate localDate;
 }

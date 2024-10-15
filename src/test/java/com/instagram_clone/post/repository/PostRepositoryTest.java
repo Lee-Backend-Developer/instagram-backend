@@ -33,6 +33,7 @@ class PostRepositoryTest {
         memberRepository.save(Member.builder().id(1L).build());
     }
 
+    
     @Test
     void findByMemberId() {
         // given
