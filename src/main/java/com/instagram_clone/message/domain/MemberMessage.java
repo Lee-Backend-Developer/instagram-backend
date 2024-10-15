@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @Entity
-public class Message {
+public class MemberMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
