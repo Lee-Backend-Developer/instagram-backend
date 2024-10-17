@@ -1,0 +1,21 @@
+# 게시판 글 조회하기
+GET http://127.0.0.1/api/post
+
+###
+
+# 게시판 글 추가하기
+POST http://127.0.0.1/api/post
+Content-Type: application/json
+
+{
+  "caption" : "내용입니다",
+  "location": "경기도",
+  "images" : ["alskdjflasjfl.jpg"]
+}
+
+###
+
+# 게시판 글 삭제하기
+DELETE http://127.0.0.1/api/post/1
+
+###
