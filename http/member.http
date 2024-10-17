@@ -1,0 +1,22 @@
+#회원가입
+POST http://127.0.0.1/api/member/signUp
+Content-Type: application/json
+
+{
+    "email": "admin@instagram.com",
+    "firstName": "admin",
+    "lastName": "admin",
+    "username": "admin",
+    "password": "12341234"
+}
+###
+
+# 로그인
+POST http://127.0.0.1/api/member/login
+Content-Type: application/json
+
+{
+    "email": "admin@instagram.com",
+    "password": "12341234"
+}
+###
