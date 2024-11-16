@@ -4,6 +4,7 @@ import com.instagram_clone.member.domain.Member;
 import com.instagram_clone.member.request.LoginForm;
 import com.instagram_clone.member.request.SignUpForm;
 import com.instagram_clone.common.response.Response;
+import com.instagram_clone.member.response.MemberInfo;
 import com.instagram_clone.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,12 +43,19 @@ public class MemberController {
     }
 
     // 내 정보
-    @GetMapping("{username}/")
+    @GetMapping("{username}")
     public ResponseEntity<Response> getMyInfo(@PathVariable String username) {
         Member myInfo = memberService.getMyInfo(username);
+        //password 마스킹 처리
+        MemberInfo responseInfo = MemberInfo.builder()
+                .username(myInfo.getUsername())
+                .email(myInfo.getEmail())
+                .firstName(myInfo.getFirstName())
+                .lastName(myInfo.getLastName())
+                .password("******").build();
         return ResponseEntity.ok(Response.builder()
                 .state("success")
-                .data(myInfo)
+                .data(responseInfo)
                 .message("내 정보 조회 성공")
                 .build());
     }

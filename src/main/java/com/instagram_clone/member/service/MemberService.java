@@ -58,6 +58,9 @@ public class MemberService {
      * @return
      */
     public Member getMyInfo(String username) {
-        return null;
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
+
+        return member;
     }
 }
