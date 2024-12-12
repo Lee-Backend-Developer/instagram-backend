@@ -4,6 +4,7 @@ import com.instagram_clone.member.domain.Member;
 import com.instagram_clone.member.repository.MemberRepository;
 import com.instagram_clone.member.request.LoginForm;
 import com.instagram_clone.member.request.SignUpForm;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class MemberService {
      */
     @Transactional
     public Member signUp(SignUpForm signUpForm) {
+        String inputEmail = signUpForm.email();
+        if (memberRepository.existsByEmail(inputEmail)) {
+            throw new EntityExistsException(EMAIL_DUPLICATION);
+        }
         return memberRepository.save(Member.builder()
                 .email(signUpForm.email())
                 .password(signUpForm.password())
