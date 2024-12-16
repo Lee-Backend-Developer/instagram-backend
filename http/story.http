@@ -1,0 +1,16 @@
+# 스토리 생성
+POST http://127.0.0.1/api/story
+Content-Type: application/json
+
+{
+  "contentImage": "asdfsadf.jpg"
+}
+
+###
+
+# 스토리 조회
+GET http://127.0.0.1/api/story
+###
+
+# 스토리 삭제
+DELETE http://127.0.0.1/api/story
