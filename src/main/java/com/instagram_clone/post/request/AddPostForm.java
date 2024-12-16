@@ -4,10 +4,11 @@ import lombok.Builder;
 
 import java.util.List;
 
-@Builder
-public record AddPostForm(
-        String caption,
-        String location,
-        List<String> images
-) {
+
+public class AddPostForm extends PostForm {
+
+    @Builder
+    public AddPostForm(String caption, String location, List<String> images) {
+        super(caption, location, images);
+    }
 }

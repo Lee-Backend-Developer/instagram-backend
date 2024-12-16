@@ -26,9 +26,9 @@ public class PostService {
         Member member = memberCommonService.getMember(memberId);
         Post addPost = Post.builder()
                 .member(member)
-                .caption(post.caption())
-                .location(post.location())
-                .images(post.images())
+                .caption(post.getCaption())
+                .location(post.getLocation())
+                .images(post.getImage())
                 .build();
         return postRepository.save(addPost);
     }
