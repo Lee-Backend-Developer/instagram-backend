@@ -2,8 +2,10 @@ package com.instagram_clone.member.request;
 
 import lombok.Builder;
 
-@Builder
-public record LoginForm(
-        String email,
-        String password) {
+public class LoginForm extends MemberRequest {
+
+    @Builder
+    public LoginForm(String email, String password) {
+        super(email, password);
+    }
 }

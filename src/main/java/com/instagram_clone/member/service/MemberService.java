@@ -26,9 +26,9 @@ public class MemberService {
      */
     public Member login(LoginForm loginForm) throws RuntimeException {
         Member findMember = memberRepository
-                .findByEmail(loginForm.email())
+                .findByEmail(loginForm.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
-        if (!findMember.getPassword().equals(loginForm.password())) {
+        if (!findMember.getPassword().equals(loginForm.getPassword())) {
             throw new IllegalArgumentException(PASSWORD_NOT_MATCH);
         }
         return findMember;
@@ -40,16 +40,16 @@ public class MemberService {
      */
     @Transactional
     public Member signUp(SignUpForm signUpForm) {
-        String inputEmail = signUpForm.email();
+        String inputEmail = signUpForm.getEmail();
         if (memberRepository.existsByEmail(inputEmail)) {
             throw new EntityExistsException(EMAIL_DUPLICATION);
         }
         return memberRepository.save(Member.builder()
-                .email(signUpForm.email())
-                .password(signUpForm.password())
-                        .firstName(signUpForm.firstName())
-                        .lastName(signUpForm.lastName())
-                        .username(signUpForm.username())
+                .email(signUpForm.getEmail())
+                .password(signUpForm.getPassword())
+                        .firstName(signUpForm.getFirstName())
+                        .lastName(signUpForm.getLastName())
+                        .username(signUpForm.getUsername())
                 .build());
     }
 
