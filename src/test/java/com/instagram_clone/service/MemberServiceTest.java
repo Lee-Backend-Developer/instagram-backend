@@ -46,7 +46,7 @@ class MemberServiceTest {
         Member member = memberService.login(loginForm);
 
         //then 검증
-        assertEquals(member.getEmail(), loginForm.email());
+        assertEquals(member.getEmail(), loginForm.getEmail());
     }
 
     @DisplayName("회원이 없다면 로그인이 되지 않아야한다.")

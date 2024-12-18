@@ -1,10 +1,12 @@
 package com.instagram_clone.member.controller;
 
+import com.instagram_clone.common.response.ResponseType;
 import com.instagram_clone.member.domain.Member;
 import com.instagram_clone.member.request.LoginForm;
 import com.instagram_clone.member.request.SignUpForm;
 import com.instagram_clone.common.response.Response;
 import com.instagram_clone.member.response.MemberInfo;
+import com.instagram_clone.member.response.MemberResponse;
 import com.instagram_clone.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,43 +22,53 @@ public class MemberController {
 
     // 로그인
     @PostMapping("login")
-    public ResponseEntity<Response> login(@RequestBody LoginForm loginForm) {
+    public ResponseEntity<MemberResponse> login(@RequestBody LoginForm loginForm) {
         Member login = memberService.login(loginForm);
-        return ResponseEntity.ok(Response.builder()
+        // 무조건 response 객체를 만들어야됨!!
+        MemberResponse response = MemberResponse.builder()
                 .state("success")
-                .data(login)
-                .message("로그인 성공")
-                .build());
+                .message("로그인이 되었습니다.")
+                .body(getMemberResponse(login))
+                .build();
+
+        return ResponseEntity.ok(response);
 
     }
 
     // 회원가입
     @PostMapping("signUp")
-    public ResponseEntity<Response> register(@RequestBody SignUpForm signUpForm) {
+    public ResponseEntity<MemberResponse> register(@RequestBody SignUpForm signUpForm) {
         Member register = memberService.signUp(signUpForm);
-        return ResponseEntity.ok(Response.builder()
+
+        MemberResponse response = MemberResponse.builder()
                 .state("success")
-                .data(register)
-                .message("회원가입이 되었습니다.")
-                .build());
+                .message("회원가입이 완료 되었습니다.")
+                .body(getMemberResponse(register))
+                .build();
+
+        return ResponseEntity.ok(response);
 
     }
 
     // 내 정보
     @GetMapping("{username}")
-    public ResponseEntity<Response> getMyInfo(@PathVariable String username) {
+    public ResponseEntity<MemberResponse> getMyInfo(@PathVariable String username) {
         Member myInfo = memberService.getMyInfo(username);
-        //password 마스킹 처리
-        MemberInfo responseInfo = MemberInfo.builder()
+        MemberResponse response = MemberResponse.builder()
+                .state("success")
+                .message("조회완료")
+                .body(getMemberResponse(myInfo))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    private static MemberInfo getMemberResponse(Member myInfo) {
+        return MemberInfo.builder()
                 .username(myInfo.getUsername())
                 .email(myInfo.getEmail())
                 .firstName(myInfo.getFirstName())
                 .lastName(myInfo.getLastName())
-                .password("******").build();
-        return ResponseEntity.ok(Response.builder()
-                .state("success")
-                .data(responseInfo)
-                .message("내 정보 조회 성공")
-                .build());
+                .password("******")
+                .build();
     }
 }
