@@ -7,14 +7,12 @@ import com.instagram_clone.post.request.AddPostForm;
 import com.instagram_clone.post.response.PostInfo;
 import com.instagram_clone.post.response.PostResponse;
 import com.instagram_clone.post.service.PostService;
-import com.instagram_clone.util.FileSaveUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -25,33 +23,20 @@ public class PostApiController {
 
     private final PostService postService;
 
-    @PostMapping("/test")
-    public ResponseEntity test(@RequestBody MultipartFile multipartFile) {
-        FileSaveUtil saveUtil = new FileSaveUtil();
-        try {
-            saveUtil.uploadImage(multipartFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        return ResponseEntity.ok(null);
-    }
-
     /**
      * todo 사진이 넣을 수 있어야한다.
      *
      * @return 응답메시지, 상태코드, 요청 데이터
      */
     @PostMapping
-    public ResponseEntity<PostResponse> createPost(@RequestBody AddPostForm addPostForm) {
+    public ResponseEntity<PostResponse> createPost(AddPostForm addPostForm, @RequestPart(required = false) MultipartFile image) {
+        log.info("addPostForm: {}", addPostForm);
         Long memberId = 1L; // todo 임시 데이터 값
 
-        Post post = postService.addPost(addPostForm, memberId);
-
-        PostInfo postInfo = getPostInfo(post);
+        Post post = postService.addPost(addPostForm, memberId, image);
 
         PostResponse response = PostResponse.builder()
-                .postInfo(postInfo)
+                .postInfo(getPostInfo(post))
                 .state("success")
                 .message("게시글이 생성되었습니다.")
                 .build();
