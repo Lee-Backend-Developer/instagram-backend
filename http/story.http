@@ -9,7 +9,7 @@ Content-Type: application/json
 ###
 
 # 스토리 조회
-GET http://127.0.0.1/api/story
+GET http://127.0.0.1/api/story/1
 ###
 
 # 스토리 삭제

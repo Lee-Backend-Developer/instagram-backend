@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.instagram_clone.member.message.ErrorMessage.*;
+import static com.instagram_clone.error.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class MemberService {
                 .findByEmail(loginForm.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
         if (!findMember.getPassword().equals(loginForm.getPassword())) {
-            throw new IllegalArgumentException(PASSWORD_NOT_MATCH);
+            throw new IllegalArgumentException(MEMBER_PASSWORD_NOT_MATCH);
         }
         return findMember;
     }
@@ -42,7 +42,7 @@ public class MemberService {
     public Member signUp(SignUpForm signUpForm) {
         String inputEmail = signUpForm.getEmail();
         if (memberRepository.existsByEmail(inputEmail)) {
-            throw new EntityExistsException(EMAIL_DUPLICATION);
+            throw new EntityExistsException(MEMBER_EMAIL_DUPLICATION);
         }
         return memberRepository.save(Member.builder()
                 .email(signUpForm.getEmail())
